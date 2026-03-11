@@ -332,6 +332,7 @@ with st.sidebar:
             <div style="text-align: left; font-size: 11px; color: #888; line-height: 1.4; padding-top: 5px;">
                 <b>© 2026 MSCAL CARBON ERP</b><br>
                 Dev by <b>ACS Engineering Solutions</b><br>
+                <b>Team :</b> Abdel, Clara, Steve<br>
                 <span style="font-size: 10px;">Contact us : mscal.ensaia@gmail.com</span>
             </div>
             """,
@@ -1100,4 +1101,5 @@ elif "5." in nav:
             with pd.ExcelWriter(buf, engine='xlsxwriter') as wr:
                 df.to_excel(wr, index=False, sheet_name='Audit')
             st.download_button("📥 Télécharger Excel", buf, f"Audit_{st.session_state.params['entity_name']}.xlsx")
+
         st.markdown('</div>', unsafe_allow_html=True)
