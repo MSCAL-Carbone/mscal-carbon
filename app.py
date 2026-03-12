@@ -1103,3 +1103,22 @@ elif "5." in nav:
             st.download_button("📥 Télécharger Excel", buf, f"Audit_{st.session_state.params['entity_name']}.xlsx")
 
         st.markdown('</div>', unsafe_allow_html=True)
+
+# --- BOUTON DE RÉINITIALISATION (À coller en bas de la Page 5) ---
+        st.divider()
+        st.subheader("🧹 Maintenance de la Base")
+        
+        # Ce bouton permet de vider la table Supabase pour repartir de zéro
+        if st.button("🔥 RÉINITIALISER TOUTES LES DONNÉES", type="primary", use_container_width=True):
+            try:
+                # 1. On supprime les lignes dans Supabase pour la promo actuelle
+                current_promo = st.session_state.params.get('entity_name', 'Promo Inconnue')
+                supabase.table("co2_flux_carbone").delete().eq("promotion", current_promo).execute()
+                
+                # 2. On vide le cache local pour que l'affichage se mette à jour
+                st.session_state.db_entries = []
+                
+                st.success(f"La base de données pour '{current_promo}' a été vidée !")
+                st.rerun() # On relance pour rafraîchir les tableaux
+            except Exception as e:
+                st.error(f"Erreur lors de la réinitialisation : {e}")
